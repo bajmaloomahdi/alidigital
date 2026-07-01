@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جست و جو کالا | Ali Digital</title>
+    <!-- ارتباط با فایل مانیفست برای قابلیت نصب روی گوشی -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b3d0b">
+    
+    <!-- تنظیمات مرورگر آیفون -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ali Digital">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <style>
+        :root {
+            --primary-color: #0b3d0b;
+            --bg-color: #2e8b2e;
+            --accent-color: #ffd700;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Vazir', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: white;
+            direction: rtl;
+        }
+
+        /* هدر تاریک */
+        header {
+            background-color: var(--primary-color);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .score-box {
+            background: var(--accent-color);
+            color: black;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .cart-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .cart-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* بخش جستجو */
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            text-align: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* گالری محصولات */
+        .products-section {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            min-height: 380px;
+        }
+
+        .product-card {
+            background: white;
+            color: #333;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .product-card img:hover {
+            opacity: 0.9;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #111;
+        }
+
+        .product-price {
+            font-size: 14px;
+            color: #2e8b2e;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-add:hover {
+            background: #218838;
+        }
+
+        /* جایگاه خالی (وقتی محصولی در صفحه کمتر از ۴تا باشد) */
+        .empty-slot {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            min-height: 280px;
+        }
+
+        /* دکمه صفحه‌بعد */
+        .pagination-container {
+            margin: 20px 0 100px 0;
+        }
+
+        .btn-next {
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .btn-next:hover {
+            transform: scale(1.05);
+        }
+
+        /* سبد خرید کشویی */
+        #cart-list {
+            position: fixed;
+            top: 140px;
+            left: 20px;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            width: 280px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 2000;
+            text-align: right;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 3px 8px;
+            cursor: pointer;
+        }
+
+        /* فوتبال پایین صفحه */
+        #football-court {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        #ballContainer {
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            pointer-events: auto;
+        }
+
+        #ball {
+            width: 100%;
+            cursor: pointer;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #goal {
+            position: absolute;
+            bottom: 5px;
+            right: 40px;
+            width: 90px;
+            pointer-events: auto;
+        }
+
+        /* مودال نمایش تصویر */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-top">
+        <div class="score-box">⚽ گل فروشگاه: <span id="goalCount">0</span></div>
+        <button class="cart-btn" onclick="toggleCart()">🛒 <span id="cartCount">0</span></button>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="جستجوی هوشمند در کالاها..." onkeyup="searchFunction()">
+    </div>
+</header>
+
+<!-- سبد خرید کشویی -->
+<div id="cart-list">
+    <h4 style="margin-top:0;">🛒 سبد خرید شما</h4>
+    <div id="cartItems"></div>
+    <hr style="border:0; border-top:1px solid #ccc;">
+    <p style="font-weight:bold; display:flex; justify-content:space-between;">
+        <span>جمع کل:</span>
+        <span><span id="totalPrice">0</span> تومان</span>
+    </p>
+</div>
+
+<!-- بخش محصولات -->
+<main class="products-section">
+    <div class="products-grid" id="products"></div>
+    
+    <div class="pagination-container">
+        <button class="btn-next" onclick="nextPage()">صفحه بعد ➔</button>
+    </div>
+</main>
+
+<!-- بازی فوتبال در کف سایت -->
+<div id="football-court">
+    <div id="ballContainer">
+        <img src="201.jpg" id="ball" onclick="shootBall()" alt="توپ" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5323/5323985.png'">
+    </div>
+    <img src="goal.png" id="goal" alt="دروازه" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3094/3094363.png'">
+</div>
+
+<!-- مودال زوم تصویر -->
+<div id="modal" class="modal" onclick="closeModal()">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+    // آرایه ۲۰تایی کامل و آپدیت شده شما با آدرس‌های نسبی
+    const products = [
+        {name:"موبایل", price:500000000, img:"iphone17.jpg"},
+        {name:"کنسول", price:200000000, img:"PS5.jpg"},
+        {name:"لپ تاپ", price:92000000, img:"lab.jpg"},
+        {name:"ساعت", price:2300000, img:"w.jpg"},
+        {name:"هدفون", price:25600000, img:"1.jpg"},
+        {name:"کیبورد", price:3000000, img:"2.jpg"},
+        {name:"موس", price:1400000, img:"3.jpg"},
+        {name:"مانیتور", price:120970000, img:"4.jpg"},
+        {name:"کولر گازی", price:180000000, img:"f5.jpg"},
+        {name:"ماشین ظرفشویی", price:140000000, img:"6.jpg"},
+        {name:"ماشین Stepway", price:2000000000, img:"112.jpg"},
+        {name:"اسپیکر Harman Kardon", price:35000000, img:"206.jpg"},
+        {name:"دوچرخه BMX", price:170000000, img:"11.jpg"},
+        {name:"توپ جام جهانی 2026", price:5000000, img:"201.jpg"},
+        {name:"ماکت رولزرویس", price:15000000, img:"204.jpg"},
+        {name:"موتور کاوازاکی", price:25000000, img:"203.jpg"},
+        {name:"تلویزیون", price:170000000, img:"11.jpg"},
+        {name:"کوار ابی", price:5000000, img:"200.jpg"},
+        {name:"کتاب ابشار جاذبه", price:15000000, img:"204.jpg"},
+        {name:"قران", price:25000000, img:"203.jpg"}
+    ];
+
+    let currentPage = 0;
+    const itemsPerPage = 4;
+    let filteredProducts = [...products];
+    
+    // لود اولیه سبد خرید و گل‌ها از حافظه مرورگر دستگاه کاربر
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let goals = parseInt(localStorage.getItem("goals")) || 0;
+
+    // لود صفحات و استارت پروژه
+    window.onload = function() {
+        displayProducts();
+        updateCart();
+        document.getElementById('goalCount').innerText = goals;
+    };
+
+    // نمایش محصولات با شرط ۴ تایی در هر صفحه
+    function displayProducts() {
+        const container = document.getElementById('products');
+        container.innerHTML = '';
+
+        const start = currentPage * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = filteredProducts.slice(start, end);
+
+        // ساخت کارت‌ها
+        pageItems.forEach((p) => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${p.img}" alt="${p.name}" onclick="openModal('${p.img}')" onerror="this.src='https://placehold.co/200x150?text=No+Image'">
+                <div class="product-title">${p.name}</div>
+                <div class="product-price">${p.price.toLocaleString('fa-IR')} تومان</div>
+                <button class="btn-add" onclick="addToCart('${p.name}')">افزودن به سبد</button>
+            `;
+            container.appendChild(card);
+        });
+
+        // اضافه کردن جایگاه خالی (Empty Slots) اگر محصولات آن صفحه از ۴تا کمتر بود
+        const emptySlotsNeeded = itemsPerPage - pageItems.length;
+        if (emptySlotsNeeded > 0 && filteredProducts.length > 0) {
+            for (let i = 0; i < emptySlotsNeeded; i++) {
+                const emptyCard = document.createElement('div');
+                emptyCard.className = 'empty-slot';
+                emptyCard.innerText = 'جایگاه خالی محصول جدید';
+                container.appendChild(emptyCard);
+            }
+        }
+    }
+
+    // صفحه‌بندی
+    function nextPage() {
+        const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        currentPage++;
+        if (currentPage >= totalPages) {
+            currentPage = 0; // برگشت به صفحه اول در انتها
+        }
+        displayProducts();
+    }
+
+    // جستجوی هوشمند
+    function searchFunction() {
+        const query = document.getElementById('searchInput').value.trim().toLowerCase();
+        filteredProducts = products.filter(p => p.name.toLowerCase().includes(query));
+        currentPage = 0; // برگشت به صفحه اول در زمان سرچ
+        displayProducts();
+    }
+
+    // مدیریت پیشرفته سبد خرید بدون تداخل ایندکس
+    function addToCart(pName) {
+        const product = products.find(p => p.name === pName);
+        if (product) {
+            const existing = cart.find(item => item.name === pName);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCart();
+        }
+    }
+
+    function removeItem(pName) {
+        cart = cart.filter(item => item.name !== pName);
+        updateCart();
+    }
+
+    function updateCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+        const cartItemsDiv = document.getElementById('cartItems');
+        cartItemsDiv.innerHTML = '';
+        
+        let total = 0;
+        let count = 0;
+
+        cart.forEach(item => {
+            total += item.price * item.qty;
+            count += item.qty;
+
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <span>${item.name} (${item.qty} عدد)</span>
+                <button class="btn-remove" onclick="removeItem('${item.name}')">حذف</button>
+            `;
+            cartItemsDiv.appendChild(div);
+        });
+
+        document.getElementById('cartCount').innerText = count;
+        document.getElementById('totalPrice').innerText = total.toLocaleString('fa-IR');
+    }
+
+    function toggleCart() {
+        const cartList = document.getElementById('cart-list');
+        cartList.style.display = cartList.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // سیستم بازی فوتبال (شت شلیک توپ به سمت راست پایین)
+    function shootBall() {
+        const ball = document.getElementById('ball');
+        // حرکت دادن توپ به سمت دروازه در سمت راست
+        ball.style.transform = 'translateX(calc(100vw - 180px)) rotate(360deg)';
+        
+        setTimeout(() => {
+            goals++;
+            document.getElementById('goalCount').innerText = goals;
+            localStorage.setItem("goals", goals);
+            
+            // بازگرداندن توپ به نقطه شروع
+            setTimeout(() => {
+                ball.style.transform = 'translateX(0) rotate(0deg)';
+            }, 500);
+        }, 1000);
+    }
+
+    // مودال نمایش تصویر بزرگ
+    function openModal(imgSrc) {
+        document.getElementById('modal').style.display = "block";
+        document.getElementById('modalImg').src = imgSrc;
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = "none";
+    }
+
+    // ثبت اتوماتیک سرویس ورکر (PWA) برای تبدیل وب‌سایت به اپلیکیشن موبایل
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('سرویس ورکر با موفقیت نصب شد!', reg.scope))
+            .catch(err => console.log('خطا در نصب سرویس ورکر:', err));
+        });
+    }
+</script>
+</body>
+</html>

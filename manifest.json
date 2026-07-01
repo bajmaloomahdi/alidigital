@@ -1,0 +1,21 @@
+{
+  "name": "جست و جو کالا Ali Digital",
+  "short_name": "AliDigital",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#2e8b2e",
+  "theme_color": "#0b3d0b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
