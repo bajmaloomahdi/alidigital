@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ali Digital</title>
+
+<title>Ali Digital Store</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:tahoma;
 background:#f4f6f9;
-margin:0;
 direction:rtl;
+overflow-x:hidden;
 }
 
-/* header */
+/* ================= HEADER ================= */
 
 header{
 background:#111;
@@ -23,86 +31,112 @@ padding:15px 20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
 }
 
 .cart-btn{
 background:#ff9800;
 border:none;
+padding:10px 16px;
+border-radius:8px;
 color:white;
-padding:8px 14px;
-border-radius:6px;
 cursor:pointer;
+font-weight:bold;
 }
 
-/* slider */
+/* ================= SLIDER ================= */
 
 .slider-wrapper{
 position:relative;
-padding:30px;
+max-width:1200px;
+margin:40px auto;
+padding:0 60px;
 }
 
 .slider{
 overflow:hidden;
+width:100%;
 }
 
 .slider-track{
 display:flex;
 flex-wrap:wrap;
 gap:20px;
-transition:transform .4s;
+justify-content:center;
+transition:transform .4s ease;
+min-width:100%;
 }
 
-/* product */
+/* ================= PRODUCT ================= */
 
 .product{
 width:calc(33.33% - 14px);
 background:white;
-border-radius:10px;
-box-shadow:0 3px 10px rgba(0,0,0,.08);
+border-radius:14px;
+padding:15px;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
 text-align:center;
-padding:10px;
+transition:.2s;
+}
+
+.product:hover{
+transform:translateY(-5px);
 }
 
 .product img{
 width:100%;
-height:160px;
+height:180px;
 object-fit:contain;
+margin-bottom:10px;
 }
 
 .title{
-margin:8px 0;
-font-size:14px;
+font-size:15px;
+font-weight:bold;
+margin-bottom:8px;
+min-height:40px;
 }
 
 .price{
 color:#2e7d32;
+font-size:15px;
 font-weight:bold;
+margin-bottom:12px;
 }
 
 .add-btn{
-margin-top:8px;
+width:100%;
+padding:10px;
 background:#0d6efd;
 border:none;
 color:white;
-padding:8px;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
-width:100%;
+font-size:14px;
 }
 
-/* arrows */
+/* ================= ARROWS ================= */
 
 .arrow{
 position:absolute;
-top:40%;
+top:50%;
+transform:translateY(-50%);
 background:white;
 border:none;
-font-size:22px;
-width:40px;
-height:40px;
+font-size:24px;
+width:50px;
+height:50px;
 border-radius:50%;
 cursor:pointer;
-box-shadow:0 2px 8px rgba(0,0,0,.2);
+box-shadow:0 2px 10px rgba(0,0,0,.2);
+z-index:10;
 }
 
 .prev{
@@ -113,7 +147,7 @@ right:0;
 left:0;
 }
 
-/* cart */
+/* ================= CART ================= */
 
 .cart-panel{
 position:fixed;
@@ -121,46 +155,66 @@ bottom:0;
 left:0;
 right:0;
 background:white;
-border-top:3px solid #ff9800;
 padding:20px;
+border-top:4px solid #ff9800;
 display:none;
 max-height:50vh;
 overflow:auto;
+z-index:2000;
+}
+
+.cart-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+font-weight:bold;
+font-size:18px;
 }
 
 .cart-item{
 display:flex;
 justify-content:space-between;
-padding:5px 0;
+padding:8px 0;
+border-bottom:1px solid #eee;
+}
+
+.total{
+margin-top:15px;
+font-weight:bold;
+color:#2e7d32;
 }
 
 .cart-actions{
-margin-top:10px;
 display:flex;
 gap:10px;
+margin-top:15px;
 }
 
 .cart-actions button{
 flex:1;
-padding:8px;
+padding:10px;
 border:none;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
+color:white;
 }
 
 .close-btn{
 background:#6c757d;
-color:white;
 }
 
 .clear-btn{
 background:#dc3545;
-color:white;
 }
 
-/* mobile */
+/* ================= MOBILE ================= */
 
-@media(max-width:600px){
+@media(max-width:700px){
+
+.slider-wrapper{
+padding:10px;
+}
 
 .slider{
 overflow:visible;
@@ -168,6 +222,7 @@ overflow:visible;
 
 .slider-track{
 transform:none !important;
+flex-direction:column;
 }
 
 .product{
@@ -178,6 +233,10 @@ width:100%;
 display:none;
 }
 
+.product img{
+height:140px;
+}
+
 }
 
 </style>
@@ -185,15 +244,22 @@ display:none;
 
 <body>
 
+<!-- HEADER -->
+
 <header>
 
-<div>Ali Land Store</div>
+<div class="logo">
+Ali Digital
+</div>
 
 <button class="cart-btn" onclick="toggleCart()">
-🛒 <span id="cart-count">0</span>
+🛒 سبد خرید
+(<span id="cart-count">0</span>)
 </button>
 
 </header>
+
+<!-- SLIDER -->
 
 <div class="slider-wrapper">
 
@@ -204,45 +270,63 @@ display:none;
 <div class="slider-track" id="track">
 
 <div class="product">
-<img src="1.jpg">
-<div class="title">هدفون</div>
-<div class="price">890000</div>
-<button class="add-btn" onclick="addToCart('هدفون',890000)">افزودن</button>
+<img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+<div class="title">هدفون گیمینگ</div>
+<div class="price">890,000 تومان</div>
+<button class="add-btn"
+onclick="addToCart('هدفون گیمینگ',890000)">
+افزودن به سبد
+</button>
 </div>
 
 <div class="product">
-<img src="2.JPG">
-<div class="title">کیبورد</div>
-<div class="price">1200000</div>
-<button class="add-btn" onclick="addToCart('کیبورد',1200000)">افزودن</button>
+<img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+<div class="title">کیبورد RGB</div>
+<div class="price">1,200,000 تومان</div>
+<button class="add-btn"
+onclick="addToCart('کیبورد RGB',1200000)">
+افزودن به سبد
+</button>
 </div>
 
 <div class="product">
-<img src="206.JPG">
-<div class="title">اسپیکر</div>
-<div class="price">780000</div>
-<button class="add-btn" onclick="addToCart('اسپیکر',780000)">افزودن</button>
+<img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+<div class="title">اسپیکر هارمن کاردن</div>
+<div class="price">780,000 تومان</div>
+<button class="add-btn"
+onclick="addToCart('اسپیکر',780000)">
+افزودن به سبد
+</button>
 </div>
 
 <div class="product">
-<img src="11.JPG">
-<div class="title">ماکت ماشین</div>
-<div class="price">500000</div>
-<button class="add-btn" onclick="addToCart('ماکت',500000)">افزودن</button>
+<img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+<div class="title">ماکت ماشین BMW</div>
+<div class="price">500,000 تومان</div>
+<button class="add-btn"
+onclick="addToCart('ماکت BMW',500000)">
+افزودن به سبد
+</button>
 </div>
 
 <div class="product">
-<img src="12.JPG">
-<div class="title">دسته بازی</div>
-<div class="price">320000</div>
-<button class="add-btn" onclick="addToCart('دسته',320000)">افزودن</button>
+<img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+<div class="title">دسته ایکس باکس</div>
+<div class="price">320,000 تومان</div>
+<button class="add-btn"
+onclick="addToCart('دسته ایکس باکس',320000)">
+افزودن به سبد
+</button>
 </div>
 
 <div class="product">
-<img src="204.JPG">
-<div class="title">موبایل</div>
-<div class="price">250000</div>
-<button class="add-btn" onclick="addToCart('موبایل',250000)">افزودن</button>
+<img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+<div class="title">موبایل سامسونگ</div>
+<div class="price">250,000 تومان</div>
+<button class="add-btn"
+onclick="addToCart('موبایل سامسونگ',250000)">
+افزودن به سبد
+</button>
 </div>
 
 </div>
@@ -253,37 +337,56 @@ display:none;
 
 </div>
 
-<div class="cart-panel" id="cart">
+<!-- CART -->
 
-<h3>سبد خرید</h3>
+<div class="cart-panel" id="cart-panel">
+
+<div class="cart-title">
+<span>سبد خرید</span>
+
+<span style="cursor:pointer"
+onclick="toggleCart()">✕</span>
+</div>
 
 <div id="cart-items"></div>
 
-<div id="cart-total"></div>
+<div class="total" id="cart-total">
+جمع: 0 تومان
+</div>
 
 <div class="cart-actions">
 
-<button class="close-btn" onclick="toggleCart()">بستن</button>
+<button class="close-btn"
+onclick="toggleCart()">
+بستن
+</button>
 
-<button class="clear-btn" onclick="clearCart()">خالی کردن</button>
+<button class="clear-btn"
+onclick="clearCart()">
+خالی کردن
+</button>
 
 </div>
 
 </div>
+
+<!-- SCRIPT -->
 
 <script>
 
-let cart=[]
-let page=0
+let cart = []
+
+let currentPage = 0
 
 function toggleCart(){
 
-let c=document.getElementById("cart")
+const cartPanel =
+document.getElementById("cart-panel")
 
-if(c.style.display==="block"){
-c.style.display="none"
+if(cartPanel.style.display==="block"){
+cartPanel.style.display="none"
 }else{
-c.style.display="block"
+cartPanel.style.display="block"
 }
 
 }
@@ -298,28 +401,34 @@ updateCart()
 
 function updateCart(){
 
-document.getElementById("cart-count").innerText=cart.length
+document.getElementById("cart-count")
+.innerText = cart.length
 
-let items=document.getElementById("cart-items")
+let items =
+document.getElementById("cart-items")
 
-items.innerHTML=""
+items.innerHTML = ""
 
-let total=0
+let total = 0
 
-cart.forEach(i=>{
+cart.forEach(item=>{
 
-total+=i.price
+total += item.price
 
-items.innerHTML+=`
+items.innerHTML += `
 <div class="cart-item">
-<span>${i.name}</span>
-<span>${i.price}</span>
+<span>${item.name}</span>
+<span>${item.price.toLocaleString('fa-IR')} تومان</span>
 </div>
 `
 
 })
 
-document.getElementById("cart-total").innerText="جمع: "+total
+document.getElementById("cart-total")
+.innerText =
+"جمع: " +
+total.toLocaleString('fa-IR')
++ " تومان"
 
 }
 
@@ -331,29 +440,47 @@ updateCart()
 
 }
 
+/* ===== SLIDER ===== */
+
 function nextSlide(){
 
-const track=document.getElementById("track")
+if(window.innerWidth <= 700) return
 
-const width=document.querySelector(".slider").offsetWidth
+const track =
+document.getElementById("track")
 
-page++
+const slider =
+document.querySelector(".slider")
 
-track.style.transform="translateX(-"+page*width+"px)"
+const pageWidth =
+slider.offsetWidth
+
+currentPage++
+
+track.style.transform =
+`translateX(-${currentPage * pageWidth}px)`
 
 }
 
 function prevSlide(){
 
-if(page>0){
+if(window.innerWidth <= 700) return
 
-const track=document.getElementById("track")
+if(currentPage > 0){
 
-const width=document.querySelector(".slider").offsetWidth
+currentPage--
 
-page--
+const track =
+document.getElementById("track")
 
-track.style.transform="translateX(-"+page*width+"px)"
+const slider =
+document.querySelector(".slider")
+
+const pageWidth =
+slider.offsetWidth
+
+track.style.transform =
+`translateX(-${currentPage * pageWidth}px)`
 
 }
 
