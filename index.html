@@ -13,7 +13,7 @@
 }
 
 body{
-  font-family:tahoma;
+  font-family:tahoma, sans-serif;
   background:#f4f6f9;
   direction:rtl;
   overflow-x:hidden;
@@ -48,33 +48,24 @@ header{
   font-weight:bold;
 }
 
-/* ================= SLIDER ================= */
+/* ================= PRODUCT CONTAINER (GRID) ================= */
 
-.slider-wrapper{
-  position:relative;
+.products-container{
   max-width:1200px;
   margin:40px auto;
-  padding:0 60px;
+  padding:0 20px;
 }
 
-.slider{
-  overflow:hidden;
-  width:100%;
+.products-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* ۳ محصول در هر ردیف در دسکتاپ */
+  gap: 20px;
+  width: 100%;
 }
 
-.slider-track{
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
-  justify-content:center;
-  transition:transform .4s ease;
-  min-width:100%;
-}
-
-/* ================= PRODUCT ================= */
+/* ================= PRODUCT CARD ================= */
 
 .product{
-  width:calc(33.33% - 14px);
   background:white;
   border-radius:14px;
   padding:15px;
@@ -119,32 +110,7 @@ header{
   font-size:14px;
 }
 
-/* ================= ARROWS ================= */
-
-.arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:white;
-  border:none;
-  font-size:24px;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  cursor:pointer;
-  box-shadow:0 2px 10px rgba(0,0,0,.2);
-  z-index:10;
-}
-
-.prev{
-  right:0;
-}
-
-.next{
-  left:0;
-}
-
-/* ================= CART ================= */
+/* ================= CART PANEL ================= */
 
 .cart-panel{
   position:fixed;
@@ -205,35 +171,21 @@ header{
   background:#dc3545;
 }
 
-/* ================= MOBILE ================= */
+/* ================= RESPONSIVE ================= */
 
-@media(max-width:700px){
-
-  .slider-wrapper{
-    padding:10px;
+@media(max-width:900px){
+  .products-grid{
+    grid-template-columns: repeat(2, 1fr); /* ۲ محصول در هر ردیف در تبلت */
   }
+}
 
-  .slider{
-    overflow:visible;
+@media(max-width:600px){
+  .products-grid{
+    grid-template-columns: 1fr; /* ۱ محصول در هر ردیف در موبایل (زیر هم) */
   }
-
-  .slider-track{
-    transform:none !important;
-    flex-direction:column;
-  }
-
-  .product{
-    width:100%;
-  }
-
-  .arrow{
-    display:none;
-  }
-
   .product img{
     height:140px;
   }
-
 }
 
 </style>
@@ -250,150 +202,149 @@ header{
   </button>
 </header>
 
-<!-- SLIDER -->
-<div class="slider-wrapper">
+<!-- PRODUCTS GRID SECTION -->
+<div class="products-container">
+  <div class="products-grid" id="products-list">
 
-  <button class="arrow prev" onclick="prevSlide()">›</button>
+    <!-- ================= ROW 1 ================= -->
 
-  <div class="slider">
-    <div class="slider-track" id="track">
-
-      <!-- ================= PAGE 1 ================= -->
-
-      <div class="product">
-        <img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">هدفون گیمینگ</div>
-        <div class="price">890,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('هدفون گیمینگ',890000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">کیبورد RGB</div>
-        <div class="price">1,200,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('کیبورد RGB',1200000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">اسپیکر هارمن کاردن</div>
-        <div class="price">780,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('اسپیکر',780000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">BMX</div>
-        <div class="price">500,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('BMX',500000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">دسته ایکس باکس</div>
-        <div class="price">320,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('دسته ایکس باکس',320000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">ماکت ماشین</div>
-        <div class="price">250,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('ماکت ماشین',250000)">افزودن به سبد</button>
-      </div>
-
-      <!-- ================= PAGE 2 ================= -->
-
-      <div class="product">
-        <img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول تست 1</div>
-        <div class="price">450,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول تست 1',450000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول تست 2</div>
-        <div class="price">650,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول تست 2',650000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول تست 3</div>
-        <div class="price">900,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول تست 3',900000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول تست 4</div>
-        <div class="price">300,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول تست 4',300000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول تست 5</div>
-        <div class="price">120,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول تست 5',120000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول تست 6</div>
-        <div class="price">1,100,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول تست 6',1100000)">افزودن به سبد</button>
-      </div>
-
-      <!-- ================= PAGE 3 ================= -->
-
-      <div class="product">
-        <img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول جدید 1</div>
-        <div class="price">220,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول جدید 1',220000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول جدید 2</div>
-        <div class="price">540,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول جدید 2',540000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول جدید 3</div>
-        <div class="price">760,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول جدید 3',760000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول جدید 4</div>
-        <div class="price">880,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول جدید 4',880000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول جدید 5</div>
-        <div class="price">990,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول جدید 5',990000)">افزودن به سبد</button>
-      </div>
-
-      <div class="product">
-        <img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
-        <div class="title">محصول جدید 6</div>
-        <div class="price">1,250,000 تومان</div>
-        <button class="add-btn" onclick="addToCart('محصول جدید 6',1250000)">افزودن به سبد</button>
-      </div>
-
+    <div class="product">
+      <img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">هدفون گیمینگ</div>
+      <div class="price">890,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('هدفون گیمینگ',890000)">افزودن به سبد</button>
     </div>
-  </div>
 
-  <button class="arrow next" onclick="nextSlide()">‹</button>
+    <div class="product">
+      <img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">کیبورد RGB</div>
+      <div class="price">1,200,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('کیبورد RGB',1200000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">اسپیکر هارمن کاردن</div>
+      <div class="price">780,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('اسپیکر',780000)">افزودن به سبد</button>
+    </div>
+
+    <!-- ================= ROW 2 ================= -->
+
+    <div class="product">
+      <img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">BMX</div>
+      <div class="price">500,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('BMX',500000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">دسته ایکس باکس</div>
+      <div class="price">320,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('دسته ایکس باکس',320000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">ماکت ماشین</div>
+      <div class="price">250,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('ماکت ماشین',250000)">افزودن به سبد</button>
+    </div>
+
+    <!-- ================= ROW 3 ================= -->
+
+    <div class="product">
+      <img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول تست 1</div>
+      <div class="price">450,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول تست 1',450000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول تست 2</div>
+      <div class="price">650,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول تست 2',650000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول تست 3</div>
+      <div class="price">900,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول تست 3',900000)">افزودن به سبد</button>
+    </div>
+
+    <!-- ================= ROW 4 ================= -->
+
+    <div class="product">
+      <img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول تست 4</div>
+      <div class="price">300,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول تست 4',300000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول تست 5</div>
+      <div class="price">120,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول تست 5',120000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول تست 6</div>
+      <div class="price">1,100,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول تست 6',1100000)">افزودن به سبد</button>
+    </div>
+
+    <!-- ================= ROW 5 ================= -->
+
+    <div class="product">
+      <img src="1.jpg" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول جدید 1</div>
+      <div class="price">220,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول جدید 1',220000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="2.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول جدید 2</div>
+      <div class="price">540,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول جدید 2',540000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="206.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول جدید 3</div>
+      <div class="price">760,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول جدید 3',760000)">افزودن به سبد</button>
+    </div>
+
+    <!-- ================= ROW 6 ================= -->
+
+    <div class="product">
+      <img src="11.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول جدید 4</div>
+      <div class="price">880,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول جدید 4',880000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="12.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول جدید 5</div>
+      <div class="price">990,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول جدید 5',990000)">افزودن به سبد</button>
+    </div>
+
+    <div class="product">
+      <img src="204.JPG" onerror="this.src='https://via.placeholder.com/300x200?text=Product'">
+      <div class="title">محصول جدید 6</div>
+      <div class="price">1,250,000 تومان</div>
+      <button class="add-btn" onclick="addToCart('محصول جدید 6',1250000)">افزودن به سبد</button>
+    </div>
+
+  </div>
 </div>
 
 <!-- CART -->
@@ -414,8 +365,9 @@ header{
 </div>
 
 <script>
-let cart = []
-let currentPage = 0
+// بارگذاری اولیه سبد خرید از localStorage (در صورت وجود)
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+updateCart();
 
 function toggleCart(){
   const cartPanel = document.getElementById("cart-panel")
@@ -428,6 +380,7 @@ function toggleCart(){
 
 function addToCart(name,price){
   cart.push({name,price})
+  localStorage.setItem('cart', JSON.stringify(cart));
   updateCart()
 }
 
@@ -439,12 +392,15 @@ function updateCart(){
 
   let total = 0
 
-  cart.forEach(item=>{
+  cart.forEach((item, index)=>{
     total += item.price
     items.innerHTML += `
       <div class="cart-item">
         <span>${item.name}</span>
-        <span>${item.price.toLocaleString('fa-IR')} تومان</span>
+        <div>
+          <span>${item.price.toLocaleString('fa-IR')} تومان</span>
+          <span style="color:red; cursor:pointer; margin-right:10px;" onclick="removeFromCart(${index})">❌</span>
+        </div>
       </div>
     `
   })
@@ -453,40 +409,16 @@ function updateCart(){
     "جمع: " + total.toLocaleString('fa-IR') + " تومان"
 }
 
+function removeFromCart(index){
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCart();
+}
+
 function clearCart(){
   cart = []
+  localStorage.removeItem('cart');
   updateCart()
-}
-
-/* ===== SLIDER ===== */
-
-function nextSlide(){
-  if(window.innerWidth <= 700) return
-
-  const track = document.getElementById("track")
-  const slider = document.querySelector(".slider")
-  const pageWidth = slider.offsetWidth
-
-  const itemsPerPage = 6
-  const totalPages = Math.ceil(track.children.length / itemsPerPage)
-
-  if(currentPage < totalPages - 1){
-    currentPage++
-    track.style.transform = `translateX(-${currentPage * pageWidth}px)`
-  }
-}
-
-function prevSlide(){
-  if(window.innerWidth <= 700) return
-
-  if(currentPage > 0){
-    currentPage--
-    const track = document.getElementById("track")
-    const slider = document.querySelector(".slider")
-    const pageWidth = slider.offsetWidth
-
-    track.style.transform = `translateX(-${currentPage * pageWidth}px)`
-  }
 }
 </script>
 
