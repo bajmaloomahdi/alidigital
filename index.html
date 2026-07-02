@@ -3,119 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>علی دیجیتال | فروشگاه اینترنتی</title>
-<link rel="manifest" href="manifest.json">
+<title>Ali Digital</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
 
 body{
 font-family:tahoma;
 background:#f4f6f9;
+margin:0;
 direction:rtl;
-overflow-x:hidden;
 }
 
 /* header */
 
 header{
 background:#111;
-color:#fff;
+color:white;
 padding:15px 20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-position:sticky;
-top:0;
-z-index:1000;
-}
-
-.brand{
-font-size:22px;
-font-weight:bold;
 }
 
 .cart-btn{
 background:#ff9800;
 border:none;
 color:white;
-padding:10px 16px;
-border-radius:8px;
+padding:8px 14px;
+border-radius:6px;
 cursor:pointer;
-font-weight:bold;
 }
 
 /* slider */
 
-.slider-container{
-padding:30px 20px;
-overflow-x:auto;
-scroll-behavior:smooth;
+.slider-wrapper{
+position:relative;
+padding:30px;
+}
+
+.slider{
+overflow:hidden;
 }
 
 .slider-track{
 display:flex;
+transition:transform .4s ease;
 gap:20px;
 }
 
-/* product card */
+/* product */
 
 .product{
 flex:0 0 calc(20% - 16px);
 background:white;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 4px 15px rgba(0,0,0,0.05);
-display:flex;
-flex-direction:column;
-border:1px solid #eee;
-transition:.2s;
-}
-
-.product:hover{
-transform:translateY(-5px);
-}
-
-.img-container{
-height:180px;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:15px;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+text-align:center;
+padding:10px;
 }
 
 .product img{
-max-width:100%;
-max-height:100%;
+width:100%;
+height:150px;
 object-fit:contain;
 }
 
 .title{
-padding:10px;
-text-align:center;
-font-weight:bold;
+font-size:14px;
+margin:8px 0;
 }
 
 .price{
-text-align:center;
 color:#2e7d32;
 font-weight:bold;
-padding-bottom:10px;
 }
 
 .add-btn{
-margin:10px;
+margin-top:8px;
 background:#0d6efd;
-color:white;
 border:none;
-border-radius:8px;
-padding:10px;
+color:white;
+padding:8px;
+border-radius:6px;
 cursor:pointer;
+width:100%;
+}
+
+/* arrows */
+
+.arrow{
+position:absolute;
+top:45%;
+background:white;
+border:none;
+font-size:22px;
+width:40px;
+height:40px;
+border-radius:50%;
+cursor:pointer;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.prev{
+right:0;
+}
+
+.next{
+left:0;
 }
 
 /* tablet */
@@ -136,74 +130,6 @@ flex:0 0 calc(33.33% - 14px);
 flex:0 0 calc(50% - 10px);
 }
 
-.img-container{
-height:130px;
-}
-
-.title{
-font-size:13px;
-}
-
-.price{
-font-size:13px;
-}
-
-}
-
-/* cart */
-
-.cart-panel{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-padding:20px;
-display:none;
-max-height:50vh;
-overflow:auto;
-border-top:3px solid #ff9800;
-}
-
-.cart-panel.show{
-display:block;
-}
-
-.cart-header{
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.cart-item{
-display:flex;
-justify-content:space-between;
-padding:6px 0;
-}
-
-.cart-actions{
-display:flex;
-gap:10px;
-margin-top:15px;
-}
-
-.cart-actions button{
-flex:1;
-padding:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.close-btn{
-background:#6c757d;
-color:white;
-}
-
-.clear-btn{
-background:#dc3545;
-color:white;
 }
 
 </style>
@@ -213,145 +139,122 @@ color:white;
 
 <header>
 
-<div class="brand">Ali Land Store</div>
+<div>Ali Land Store</div>
 
-<button class="cart-btn" onclick="toggleCart()">
-🛒 سبد خرید: <span id="cart-count">0</span>
+<button class="cart-btn">
+🛒 <span id="cart-count">0</span>
 </button>
 
 </header>
 
-<div class="slider-container">
 
-<div class="slider-track">
+<div class="slider-wrapper">
+
+<button class="arrow prev" onclick="prevSlide()">›</button>
+
+<div class="slider">
+<div class="slider-track" id="track">
 
 <div class="product">
-<div class="img-container">
 <img src="1.jpg">
-</div>
 <div class="title">هدفون</div>
-<div class="price">890,000 تومان</div>
-<button class="add-btn" onclick="addToCart('هدفون',890000)">افزودن</button>
+<div class="price">890000 تومان</div>
+<button class="add-btn" onclick="addToCart()">افزودن</button>
 </div>
 
 <div class="product">
-<div class="img-container">
 <img src="2.JPG">
-</div>
 <div class="title">کیبورد</div>
-<div class="price">1,200,000 تومان</div>
-<button class="add-btn" onclick="addToCart('کیبورد',1200000)">افزودن</button>
+<div class="price">1200000 تومان</div>
+<button class="add-btn" onclick="addToCart()">افزودن</button>
 </div>
 
 <div class="product">
-<div class="img-container">
 <img src="206.JPG">
-</div>
-<div class="title">هارمن کاردن</div>
-<div class="price">780,000 تومان</div>
-<button class="add-btn" onclick="addToCart('هارمن کاردن',780000)">افزودن</button>
+<div class="title">اسپیکر</div>
+<div class="price">780000 تومان</div>
+<button class="add-btn" onclick="addToCart()">افزودن</button>
 </div>
 
 <div class="product">
-<div class="img-container">
 <img src="11.JPG">
-</div>
-<div class="title">بی ام ایکس</div>
-<div class="price">500,000 تومان</div>
-<button class="add-btn" onclick="addToCart('بی ام ایکس',500000)">افزودن</button>
-</div>
-
-<div class="product">
-<div class="img-container">
-<img src="12.JPG">
-</div>
-<div class="title">دسته ایکس باکس</div>
-<div class="price">320,000 تومان</div>
-<button class="add-btn" onclick="addToCart('دسته ایکس باکس',320000)">افزودن</button>
-</div>
-
-<div class="product">
-<div class="img-container">
-<img src="204.JPG">
-</div>
 <div class="title">ماکت ماشین</div>
-<div class="price">250,000 تومان</div>
-<button class="add-btn" onclick="addToCart('ماکت ماشین',250000)">افزودن</button>
+<div class="price">500000 تومان</div>
+<button class="add-btn" onclick="addToCart()">افزودن</button>
+</div>
+
+<div class="product">
+<img src="12.JPG">
+<div class="title">دسته بازی</div>
+<div class="price">320000 تومان</div>
+<button class="add-btn" onclick="addToCart()">افزودن</button>
+</div>
+
+<div class="product">
+<img src="204.JPG">
+<div class="title">موبایل</div>
+<div class="price">250000 تومان</div>
+<button class="add-btn" onclick="addToCart()">افزودن</button>
 </div>
 
 </div>
 </div>
 
-<div id="cart-panel" class="cart-panel">
-
-<div class="cart-header">
-<span>سبد خرید</span>
-<span onclick="toggleCart()" style="cursor:pointer">✕</span>
-</div>
-
-<div id="cart-items"></div>
-
-<div id="cart-total"></div>
-
-<div class="cart-actions">
-<button class="close-btn" onclick="toggleCart()">ادامه خرید</button>
-<button class="clear-btn" onclick="clearCart()">خالی کردن</button>
-</div>
+<button class="arrow next" onclick="nextSlide()">‹</button>
 
 </div>
+
 
 <script>
 
-let cart=JSON.parse(localStorage.getItem("cart")||"[]")
+let index=0
 
-function saveCart(){
-localStorage.setItem("cart",JSON.stringify(cart))
-updateCartUI()
-}
+function itemsPerView(){
 
-function addToCart(name,price){
-cart.push({name,price})
-saveCart()
-toggleCart()
-}
-
-function updateCartUI(){
-
-document.getElementById("cart-count").innerText=cart.length
-
-let items=document.getElementById("cart-items")
-
-let total=0
-
-items.innerHTML=""
-
-cart.forEach(item=>{
-
-total+=item.price
-
-items.innerHTML+=
-`<div class="cart-item">
-<span>${item.name}</span>
-<span>${item.price.toLocaleString('fa-IR')} تومان</span>
-</div>`
-
-})
-
-document.getElementById("cart-total").innerText=
-"جمع کل: "+total.toLocaleString('fa-IR')+" تومان"
+if(window.innerWidth < 600) return 2
+if(window.innerWidth < 1000) return 3
+return 5
 
 }
 
-function toggleCart(){
-document.getElementById("cart-panel").classList.toggle("show")
+function updateSlider(){
+
+const track=document.getElementById("track")
+const itemWidth=track.children[0].offsetWidth+20
+
+track.style.transform=`translateX(${index * itemWidth}px)`
+
 }
 
-function clearCart(){
-cart=[]
-saveCart()
+function nextSlide(){
+
+const track=document.getElementById("track")
+const max=track.children.length-itemsPerView()
+
+if(index < max){
+index++
+updateSlider()
 }
 
-updateCartUI()
+}
+
+function prevSlide(){
+
+if(index>0){
+index--
+updateSlider()
+}
+
+}
+
+window.addEventListener("resize",updateSlider)
+
+function addToCart(){
+
+let count=document.getElementById("cart-count")
+count.innerText=parseInt(count.innerText)+1
+
+}
 
 </script>
 
