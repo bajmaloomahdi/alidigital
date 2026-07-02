@@ -18,6 +18,7 @@
             background: #f4f6f9;
             color: #333;
             direction: rtl;
+            overflow-x: hidden;
         }
 
         header {
@@ -56,15 +57,32 @@
             background: #e68a00;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 15px;
+        /* بخش کانتینر اسلایدر افقی */
+        .slider-container {
+            max-width: 100%;
+            padding: 30px 20px;
+            overflow-x: auto; /* فعال کردن اسکرول افقی */
+            white-space: nowrap; /* عدم شکستن خط برای محصولات */
+            scrollbar-width: thin; /* برای فایرفاکس */
+            scrollbar-color: #ff9800 #eee;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        /* زیباسازی اسکرول‌بار در مرورگرهای کروم و ادج */
+        .slider-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .slider-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slider-container::-webkit-scrollbar-thumb {
+            background: #ff9800;
+            border-radius: 10px;
+        }
+
+        /* ردیف محصولات */
+        .slider-track {
+            display: inline-flex;
             gap: 20px;
         }
 
@@ -75,8 +93,11 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
+            width: 250px; /* عرض ثابت برای هر کارت محصول در اسلایدر */
+            flex-shrink: 0; /* جلوگیری از مچاله شدن کارت */
             transition: transform 0.2s, box-shadow 0.2s;
             border: 1px solid #eee;
+            white-space: normal; /* بازگرداندن حالت متنی به حالت عادی داخل کارت */
         }
 
         .product:hover {
@@ -212,16 +233,8 @@
         .clear-btn:hover { background: #bb2d3b; }
 
         @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 10px;
-            }
-            .container {
-                margin: 15px auto;
-                padding: 0 8px;
-            }
             .product {
-                border-radius: 8px;
+                width: 180px; /* کارت‌ها روی موبایل کمی کوچک‌تر می‌شوند تا راحت‌تر اسکرول شوند */
             }
             .img-container {
                 height: 130px;
@@ -257,8 +270,9 @@
     </button>
 </header>
 
-<div class="container">
-    <div class="grid">
+<!-- اسلایدر افقی محصولات -->
+<div class="slider-container">
+    <div class="slider-track">
 
         <!-- محصول ۱ -->
         <div class="product">
@@ -280,7 +294,7 @@
             <button class="add-btn" onclick="addToCart('محصول ۲', 1200000)">افزودن به سبد خرید</button>
         </div>
 
-        <!-- محصول ۳ (مستعد خطا در اسم) -->
+        <!-- محصول ۳ -->
         <div class="product">
             <div class="img-container">
                 <img src="10.JPG" alt="محصول ۳" onerror="handleImageError(this, '10.jpg')">
@@ -310,7 +324,7 @@
             <button class="add-btn" onclick="addToCart('محصول ۵', 320000)">افزودن به سبد خرید</button>
         </div>
 
-        <!-- محصول ۶ (مستعد خطا در اسم) -->
+        <!-- محصول ۶ -->
         <div class="product">
             <div class="img-container">
                 <img src="13.JPG" alt="محصول ۶" onerror="handleImageError(this, '13.jpg')">
@@ -344,7 +358,6 @@
             imageElement.setAttribute('data-tried-fallback', 'true');
             imageElement.src = fallbackUrl;
         } else {
-            // اگر هر دو فرمت jpg و JPG خراب بودند، یک تصویر پیش‌فرض قرار بده
             imageElement.src = 'https://via.placeholder.com/150?text=No+Image';
         }
     }
