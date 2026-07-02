@@ -3,16 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ali Digital</title>
+
+<title>علی دیجیتال | فروشگاه اینترنتی</title>
+
+<meta name="description" content="فروشگاه علی دیجیتال برای خرید آنلاین محصولات دیجیتال و متنوع">
 
 <link rel="manifest" href="manifest.json">
 
 <style>
+
 body{
 font-family:tahoma;
 margin:0;
 background:#f5f5f5;
-text-align:center;
 }
 
 header{
@@ -20,6 +23,16 @@ background:#111;
 color:white;
 padding:15px;
 font-size:22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.cart{
+background:#ff9800;
+padding:8px 14px;
+border-radius:8px;
+font-size:16px;
 }
 
 .grid{
@@ -34,66 +47,108 @@ background:white;
 border-radius:10px;
 padding:10px;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
-transition:0.2s;
-}
-
-.product:hover{
-transform:scale(1.05);
+text-align:center;
 }
 
 .product img{
 width:100%;
 border-radius:8px;
+height:180px;
+object-fit:cover;
+}
+
+.price{
+color:#009688;
+font-size:18px;
+margin-top:8px;
 }
 
 button{
-margin-top:8px;
-padding:8px 12px;
+margin-top:10px;
+padding:10px;
+width:100%;
 border:none;
 background:#0077ff;
 color:white;
-border-radius:6px;
+border-radius:8px;
+font-size:15px;
 cursor:pointer;
 }
 
 button:hover{
 background:#005ad1;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-Ali Land Store
+<div>Ali Land Store</div>
+
+<div class="cart">
+🛒 سبد خرید:
+<span id="cart-count">0</span>
+</div>
 </header>
 
 <div class="grid">
 
-<div class="product"><img src="1.jpg"><button>مشاهده</button></div>
-<div class="product"><img src="2.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="10.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="11.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="12.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="13.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="14.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="15.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="16.JPG"><button>مشاهده</button></div>
+<div class="product">
+<img src="1.jpg">
+<div class="price">250,000 تومان</div>
+<button onclick="addToCart()">افزودن به سبد خرید</button>
+</div>
 
-<div class="product"><img src="112.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="113.JPG"><button>مشاهده</button></div>
+<div class="product">
+<img src="2.JPG">
+<div class="price">320,000 تومان</div>
+<button onclick="addToCart()">افزودن به سبد خرید</button>
+</div>
 
-<div class="product"><img src="200.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="201.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="202.JPG"><button>مشاهده</button></div>
-<div class="product"><img src="203.JPG"><button>مشاهده</button></div>
+<div class="product">
+<img src="10.JPG">
+<div class="price">500,000 تومان</div>
+<button onclick="addToCart()">افزودن به سبد خرید</button>
+</div>
+
+<div class="product">
+<img src="11.JPG">
+<div class="price">780,000 تومان</div>
+<button onclick="addToCart()">افزودن به سبد خرید</button>
+</div>
+
+<div class="product">
+<img src="12.JPG">
+<div class="price">1,200,000 تومان</div>
+<button onclick="addToCart()">افزودن به سبد خرید</button>
+</div>
+
+<div class="product">
+<img src="13.JPG">
+<div class="price">890,000 تومان</div>
+<button onclick="addToCart()">افزودن به سبد خرید</button>
+</div>
 
 </div>
 
 <script>
+
+let cart = 0;
+
+function addToCart(){
+cart++;
+
+document.getElementById("cart-count").innerText = cart;
+
+alert("محصول به سبد خرید اضافه شد");
+}
+
 if ('serviceWorker' in navigator) {
 navigator.serviceWorker.register('sw.js');
 }
+
 </script>
 
 </body>
