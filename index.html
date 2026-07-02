@@ -1,290 +1,410 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>علی دیجیتال | فروشگاه اینترنتی</title>
-<meta name="description" content="فروشگاه علی دیجیتال - خرید آنلاین محصولات دیجیتال و متنوع">
-<link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>علی دیجیتال | فروشگاه اینترنتی</title>
+    <meta name="description" content="فروشگاه علی دیجیتال - خرید آنلاین محصولات دیجیتال و متنوع">
+    <link rel="manifest" href="manifest.json">
 
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:tahoma, sans-serif;
-  background:#f4f4f4;
-  color:#222;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Tahoma, Geneva, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            direction: rtl;
+        }
 
-header{
-  background:#111;
-  color:#fff;
-  padding:12px 14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
+        header {
+            background: #111;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-.brand{
-  font-size:20px;
-  font-weight:bold;
-}
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
 
-.cart-btn{
-  background:#ff9800;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:10px 14px;
-  font-size:15px;
-  cursor:pointer;
-}
+        .cart-btn {
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
 
-.container{
-  padding:12px;
-}
+        .cart-btn:hover {
+            background: #e68a00;
+        }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:12px;
-}
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
 
-.product{
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  display:flex;
-  flex-direction:column;
-  min-width:0;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
 
-.product img{
-  width:100%;
-  height:160px;
-  object-fit:contain;
-  background:#fff;
-  display:block;
-  padding:8px;
-}
+        .product {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eee;
+        }
 
-.title{
-  padding:8px 10px 4px;
-  font-size:14px;
-  text-align:center;
-  min-height:38px;
-}
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
 
-.price{
-  padding:0 10px 10px;
-  color:#009688;
-  font-weight:bold;
-  text-align:center;
-  font-size:15px;
-}
+        .img-container {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.add-btn{
-  margin:0 10px 12px;
-  background:#0d6efd;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:10px;
-  font-size:14px;
-  cursor:pointer;
-}
+        .product img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
 
-.add-btn:active{
-  transform:scale(.98);
-}
+        .title {
+            padding: 10px 15px 5px;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            color: #444;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.cart-panel{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:#fff;
-  border-top:2px solid #ddd;
-  max-height:45vh;
-  overflow:auto;
-  box-shadow:0 -4px 16px rgba(0,0,0,.12);
-  padding:12px;
-  display:none;
-  z-index:9999;
-}
+        .price {
+            padding: 0 15px 15px;
+            color: #2e7d32;
+            font-weight: bold;
+            text-align: center;
+            font-size: 16px;
+        }
 
-.cart-panel.show{
-  display:block;
-}
+        .add-btn {
+            margin: 0 15px 15px;
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
 
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 0;
-  border-bottom:1px solid #eee;
-  font-size:14px;
-}
+        .add-btn:hover {
+            background: #0b5ed7;
+        }
 
-.cart-actions{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-}
+        .add-btn:active {
+            transform: scale(0.97);
+        }
 
-.cart-actions button{
-  flex:1;
-  border:none;
-  border-radius:10px;
-  padding:10px;
-  font-size:14px;
-  cursor:pointer;
-}
+        /* پنل سبد خرید */
+        .cart-panel {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            border-top: 3px solid #ff9800;
+            max-height: 50vh;
+            overflow-y: auto;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            display: none;
+            z-index: 9999;
+            border-radius: 20px 20px 0 0;
+        }
 
-.close-btn{background:#666;color:#fff}
-.clear-btn{background:#dc3545;color:#fff}
+        .cart-panel.show {
+            display: block;
+        }
 
-@media (max-width: 600px){
-  .grid{
-    grid-template-columns:repeat(2, minmax(0, 1fr));
-  }
-  .product img{
-    height:140px;
-  }
-  .brand{
-    font-size:18px;
-  }
-}
-</style>
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f9f9f9;
+            font-size: 14px;
+        }
+
+        .cart-total {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+            font-size: 16px;
+            color: #2e7d32;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .cart-actions button {
+            flex: 1;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .close-btn { background: #6c757d; color: #fff; }
+        .close-btn:hover { background: #5c636a; }
+        .clear-btn { background: #dc3545; color: #fff; }
+        .clear-btn:hover { background: #bb2d3b; }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+            .container {
+                margin: 15px auto;
+                padding: 0 8px;
+            }
+            .product {
+                border-radius: 8px;
+            }
+            .img-container {
+                height: 130px;
+                padding: 8px;
+            }
+            .title {
+                font-size: 13px;
+                padding: 5px;
+                min-height: 35px;
+            }
+            .price {
+                font-size: 13px;
+                padding: 0 5px 10px;
+            }
+            .add-btn {
+                margin: 0 8px 10px;
+                padding: 8px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+            .brand {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Ali Land Store</div>
-  <button class="cart-btn" onclick="toggleCart()">
-    🛒 سبد خرید: <span id="cart-count">0</span>
-  </button>
+    <a href="#" class="brand">Ali Land Store</a>
+    <button class="cart-btn" onclick="toggleCart()">
+        🛒 سبد خرید: <span id="cart-count">0</span>
+    </button>
 </header>
 
 <div class="container">
-  <div class="grid">
+    <div class="grid">
 
-    <div class="product">
-      <img src="1.jpg" alt="محصول 1">
-      <div class="title">محصول 1</div>
-      <div class="price">890,000 تومان</div>
-      <button class="add-btn" onclick="addToCart('محصول 1', 890000)">افزودن به سبد خرید</button>
+        <!-- محصول ۱ -->
+        <div class="product">
+            <div class="img-container">
+                <img src="1.jpg" alt="محصول ۱" onerror="handleImageError(this, '1.JPG')">
+            </div>
+            <div class="title">محصول ۱</div>
+            <div class="price">890,000 تومان</div>
+            <button class="add-btn" onclick="addToCart('محصول ۱', 890000)">افزودن به سبد خرید</button>
+        </div>
+
+        <!-- محصول ۲ -->
+        <div class="product">
+            <div class="img-container">
+                <img src="2.JPG" alt="محصول ۲" onerror="handleImageError(this, '2.jpg')">
+            </div>
+            <div class="title">محصول ۲</div>
+            <div class="price">1,200,000 تومان</div>
+            <button class="add-btn" onclick="addToCart('محصول ۲', 1200000)">افزودن به سبد خرید</button>
+        </div>
+
+        <!-- محصول ۳ (مستعد خطا در اسم) -->
+        <div class="product">
+            <div class="img-container">
+                <img src="10.JPG" alt="محصول ۳" onerror="handleImageError(this, '10.jpg')">
+            </div>
+            <div class="title">محصول ۳</div>
+            <div class="price">780,000 تومان</div>
+            <button class="add-btn" onclick="addToCart('محصول ۳', 780000)">افزودن به سبد خرید</button>
+        </div>
+
+        <!-- محصول ۴ -->
+        <div class="product">
+            <div class="img-container">
+                <img src="11.JPG" alt="محصول ۴" onerror="handleImageError(this, '11.jpg')">
+            </div>
+            <div class="title">محصول ۴</div>
+            <div class="price">500,000 تومان</div>
+            <button class="add-btn" onclick="addToCart('محصول ۴', 500000)">افزودن به سبد خرید</button>
+        </div>
+
+        <!-- محصول ۵ -->
+        <div class="product">
+            <div class="img-container">
+                <img src="12.JPG" alt="محصول ۵" onerror="handleImageError(this, '12.jpg')">
+            </div>
+            <div class="title">محصول ۵</div>
+            <div class="price">320,000 تومان</div>
+            <button class="add-btn" onclick="addToCart('محصول ۵', 320000)">افزودن به سبد خرید</button>
+        </div>
+
+        <!-- محصول ۶ (مستعد خطا در اسم) -->
+        <div class="product">
+            <div class="img-container">
+                <img src="13.JPG" alt="محصول ۶" onerror="handleImageError(this, '13.jpg')">
+            </div>
+            <div class="title">محصول ۶</div>
+            <div class="price">250,000 تومان</div>
+            <button class="add-btn" onclick="addToCart('محصول ۶', 250000)">افزودن به سبد خرید</button>
+        </div>
+
     </div>
-
-    <div class="product">
-      <img src="2.JPG" alt="محصول 2">
-      <div class="title">محصول 2</div>
-      <div class="price">1,200,000 تومان</div>
-      <button class="add-btn" onclick="addToCart('محصول 2', 1200000)">افزودن به سبد خرید</button>
-    </div>
-
-    <div class="product">
-      <img src="10.JPG" alt="محصول 3">
-      <div class="title">محصول 3</div>
-      <div class="price">780,000 تومان</div>
-      <button class="add-btn" onclick="addToCart('محصول 3', 780000)">افزودن به سبد خرید</button>
-    </div>
-
-    <div class="product">
-      <img src="11.JPG" alt="محصول 4">
-      <div class="title">محصول 4</div>
-      <div class="price">500,000 تومان</div>
-      <button class="add-btn" onclick="addToCart('محصول 4', 500000)">افزودن به سبد خرید</button>
-    </div>
-
-    <div class="product">
-      <img src="12.JPG" alt="محصول 5">
-      <div class="title">محصول 5</div>
-      <div class="price">320,000 تومان</div>
-      <button class="add-btn" onclick="addToCart('محصول 5', 320000)">افزودن به سبد خرید</button>
-    </div>
-
-    <div class="product">
-      <img src="13.JPG" alt="محصول 6">
-      <div class="title">محصول 6</div>
-      <div class="price">250,000 تومان</div>
-      <button class="add-btn" onclick="addToCart('محصول 6', 250000)">افزودن به سبد خرید</button>
-    </div>
-
-  </div>
 </div>
 
 <div id="cart-panel" class="cart-panel">
-  <div><strong>سبد خرید شما</strong></div>
-  <div id="cart-items" style="margin-top:8px;"></div>
-  <div id="cart-total" style="margin-top:10px;font-weight:bold;"></div>
+    <div class="cart-header">
+        <span>سبد خرید شما</span>
+        <span style="cursor:pointer;" onclick="toggleCart()">✕</span>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-total" class="cart-total"></div>
 
-  <div class="cart-actions">
-    <button class="close-btn" onclick="toggleCart()">بستن</button>
-    <button class="clear-btn" onclick="clearCart()">خالی کردن سبد</button>
-  </div>
+    <div class="cart-actions">
+        <button class="close-btn" onclick="toggleCart()">ادامه خرید</button>
+        <button class="clear-btn" onclick="clearCart()">خالی کردن سبد</button>
+    </div>
 </div>
 
 <script>
-let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    // مدیریت تصاویر خراب (Fallback سیستم حروف بزرگ و کوچک)
+    function handleImageError(imageElement, fallbackUrl) {
+        if (!imageElement.getAttribute('data-tried-fallback')) {
+            imageElement.setAttribute('data-tried-fallback', 'true');
+            imageElement.src = fallbackUrl;
+        } else {
+            // اگر هر دو فرمت jpg و JPG خراب بودند، یک تصویر پیش‌فرض قرار بده
+            imageElement.src = 'https://via.placeholder.com/150?text=No+Image';
+        }
+    }
 
-function saveCart(){
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartUI();
-}
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-function addToCart(name, price){
-  cart.push({name, price});
-  saveCart();
-  document.getElementById('cart-panel').classList.add('show');
-}
+    function saveCart(){
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+    }
 
-function updateCartUI(){
-  document.getElementById('cart-count').innerText = cart.length;
+    function addToCart(name, price){
+        cart.push({name, price});
+        saveCart();
+        document.getElementById('cart-panel').classList.add('show');
+    }
 
-  const items = document.getElementById('cart-items');
-  const total = document.getElementById('cart-total');
+    function updateCartUI(){
+        document.getElementById('cart-count').innerText = cart.length;
 
-  if(cart.length === 0){
-    items.innerHTML = '<div style="padding:10px 0;">سبد خرید خالی است.</div>';
-    total.innerText = '';
-    return;
-  }
+        const items = document.getElementById('cart-items');
+        const total = document.getElementById('cart-total');
 
-  let html = '';
-  let sum = 0;
+        if(cart.length === 0){
+            items.innerHTML = '<div style="padding:20px 0; text-align:center; color:#888;">سبد خرید شما در حال حاضر خالی است.</div>';
+            total.innerText = '';
+            return;
+        }
 
-  cart.forEach((item, index) => {
-    sum += item.price;
-    html += `
-      <div class="cart-item">
-        <span>${index + 1}. ${item.name}</span>
-        <span>${item.price.toLocaleString('fa-IR')} تومان</span>
-      </div>
-    `;
-  });
+        let html = '';
+        let sum = 0;
 
-  items.innerHTML = html;
-  total.innerText = 'جمع کل: ' + sum.toLocaleString('fa-IR') + ' تومان';
-}
+        cart.forEach((item, index) => {
+            sum += item.price;
+            html += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>${item.price.toLocaleString('fa-IR')} تومان</span>
+                </div>
+            `;
+        });
 
-function toggleCart(){
-  document.getElementById('cart-panel').classList.toggle('show');
-}
+        items.innerHTML = html;
+        total.innerText = 'جمع کل: ' + sum.toLocaleString('fa-IR') + ' تومان';
+    }
 
-function clearCart(){
-  cart = [];
-  saveCart();
-}
+    function toggleCart(){
+        document.getElementById('cart-panel').classList.toggle('show');
+    }
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+    function clearCart(){
+        cart = [];
+        saveCart();
+    }
 
-updateCartUI();
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+    }
+
+    updateCartUI();
 </script>
 
 </body>
